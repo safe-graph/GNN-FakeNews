@@ -268,11 +268,6 @@ if __name__ == "__main__":
 	train_per = 0.2  # training data percentage
 	val_per = 0.1  # validation data percentage
 
-	# LSTM
-	# POL: 300, GOS: 150
-	# CNN
-	# POL: 300, GOS: 150
-
 	cuda = torch.cuda.is_available()
 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
