@@ -133,7 +133,6 @@ test_loader = loader(test_set, batch_size=args.batch_size, shuffle=False)
 model = Model(args, concat=args.concat)
 if args.multi_gpu:
 	model = DataParallel(model)
-# model.load_state_dict(torch.load(f'trained_model/{args.dataset[:3]}_{args.model}_{args.feature}_sup_complete.pth'))
 model = model.to(args.device)
 optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
