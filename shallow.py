@@ -76,6 +76,6 @@ pred_y = clf.predict(X_test)
 
 acc, f1_macro, f1_micro, precision, recall, auc, ap = eval_shallow(pred_y, prob_y, y_test)
 
-print(f'Test results: acc: {acc:.4f}, f1_macro: {f1_macro:.4f}, f1_micro: {f1_micro:.4f},'
+print(f'Test results: acc: {acc:.4f}, f1_macro: {f1_macro:.4f}, f1_micro: {f1_micro:.4f}, '
 	  f'precision: {precision:.4f}, recall: {recall:.4f}, '
 	  f'auc: {auc:.4f}, ap: {ap:.4f}')
