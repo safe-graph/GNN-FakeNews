@@ -41,7 +41,10 @@ torch.manual_seed(args.seed)
 if torch.cuda.is_available():
 	torch.cuda.manual_seed(args.seed)
 
-max_nodes = 200
+if args.dataset == 'politifact':
+	max_nodes = 500
+else:
+	max_nodes = 200 
 
 
 dataset = FNNDataset(root='data', feature=args.feature, empty=False, name=args.dataset,
@@ -71,9 +74,6 @@ class GNN(torch.nn.Module):
 	def __init__(self, in_channels, hidden_channels, out_channels,
 				 normalize=False, lin=True):
 		super(GNN, self).__init__()
-
-		# print(f'GNN para: {in_channels}, {hidden_channels}, {out_channels}')
-
 		self.conv1 = DenseSAGEConv(in_channels, hidden_channels, normalize)
 		self.bn1 = torch.nn.BatchNorm1d(hidden_channels)
 		self.conv2 = DenseSAGEConv(hidden_channels, hidden_channels, normalize)
@@ -134,10 +134,6 @@ class Net(torch.nn.Module):
 
 		x, adj, l1, e1 = dense_diff_pool(x, adj, s, mask)
 
-		# out = torch.matmul(adj, x)
-		# out = out / adj.sum(dim=-1, keepdim=True).clamp(min=1)
-		# print(f'gnn1 para: {x.shape}, {out.shape}')
-
 		s = self.gnn2_pool(x, adj)
 		x = self.gnn2_embed(x, adj)
 
@@ -163,11 +159,6 @@ def train(epoch):
 	for data in train_loader:
 		data = data.to(device)
 		optimizer.zero_grad()
-
-		# out = torch.matmul(data.adj, data.x)
-		# out = out / data.adj.sum(dim=-1, keepdim=True).clamp(min=1)
-		# print(f'forward para: {data.x.shape}, {out.shape}')
-
 		out, _, _ = model(data.x, data.adj, data.mask)
 		out_log.append([F.softmax(out, dim=1), data.y])
 		loss = F.nll_loss(out, data.y.view(-1))
@@ -200,5 +191,5 @@ for epoch in tqdm(range(args.epochs)):
 		  f' recall_val: {recall_val:.4f}, auc_val: {auc_val:.4f}')
 
 [acc, f1_macro, f1_micro, precision, recall, auc, ap], test_loss = test(test_loader)
-print(f'Test set results: acc: {acc:.4f}, f1_macro: {f1_macro:.4f}, f1_micro: {f1_micro:.4f},'
+print(f'Test set results: acc: {acc:.4f}, f1_macro: {f1_macro:.4f}, f1_micro: {f1_micro:.4f}, '
 	  f'precision: {precision:.4f}, recall: {recall:.4f}, auc: {auc:.4f}, ap: {ap:.4f}')
