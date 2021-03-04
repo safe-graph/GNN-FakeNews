@@ -91,7 +91,7 @@ if torch.cuda.is_available():
 	torch.cuda.manual_seed(args.seed)
 
 dataset = FNNDataset(root='data', feature=args.feature, empty=False, name=args.dataset, transform=ToUndirected())
-# exit()
+
 if args.no_feature:
 	dataset.data.x = torch.ones(dataset.data.x.shape)
 
@@ -193,33 +193,5 @@ if __name__ == '__main__':
 			  f' recall_val: {recall_val:.4f}, auc_val: {auc_val:.4f}')
 
 	[acc, f1_macro, f1_micro, precision, recall, auc, ap], test_loss = compute_test(test_loader, verbose=False)
-	print(f'Test set results: acc: {acc:.4f}, f1_macro: {f1_macro:.4f}, f1_micro: {f1_micro:.4f},'
+	print(f'Test set results: acc: {acc:.4f}, f1_macro: {f1_macro:.4f}, f1_micro: {f1_micro:.4f}, '
 		  f'precision: {precision:.4f}, recall: {recall:.4f}, auc: {auc:.4f}, ap: {ap:.4f}')
-
-	# out_log = []
-	# model.eval()
-	# loss_test = 0.0
-	# with torch.no_grad():
-	# 	for data in test_loader:
-	# 		if not args.multi_gpu:
-	# 			data = data.to(args.device)
-	# 		out = model(data)
-	# 		if args.multi_gpu:
-	# 			y = torch.cat([d.y.unsqueeze(0) for d in data]).squeeze().to(out.device)
-	# 		else:
-	# 			y = data.y
-	# 		out_log.append([F.softmax(out, dim=1), y])
-	# 		loss_test += F.nll_loss(out, y).item()
-	#
-	# pred_log, label_log, prob_log = [], [], []
-	#
-	# for batch in out_log:
-	# 	pred_y, y = batch[0].data.cpu().numpy().argmax(axis=1), batch[1].data.cpu().numpy().tolist()
-	# 	prob_log.extend(batch[0].data.cpu().numpy()[:, 1].tolist())
-	# 	pred_log.extend(pred_y)
-	# 	label_log.extend(y)
-	#
-	# pred_log, label_log, prob_log = np.array(pred_log), np.array(label_log), np.array(prob_log)
-	# correct = (label_log == pred_log).nonzero()[0]
-
-	# torch.save(model.state_dict(), f"trained_model/{args.dataset[:3]}_{args.model}_{args.feature}_sup_complete.pth")
