@@ -1,9 +1,15 @@
 # UPFD
 Code for SIGIR2021 submission User Preference-aware Fake News Detection
 
-/Detector includes the implementation of our models and all baselines. The congfiguration can be setup with model arguments for each model. Note that the "hand" feature in model arguments represents the "Profile" feature.
+This repo includes the implementation of our models and all baselines. The congfiguration can be setup with model arguments for each model. Note that the "hand" feature in model arguments represents the "Profile" feature.
 
+CSI and SAFE are implemented in ```baselines.py```
 
+GNN-CL is implemented in ```gnncl.py```
+
+GCNFN and UPFD-GCNFN are implemented in ```gcnfn.py```
+
+UPFD-GCN and UPFD-SAGE are implemented in ```gnn.py```
 
 To run the code, you need to install Python>=3.6 and following packages:
 
