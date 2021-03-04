@@ -40,7 +40,7 @@ def data_loader(data, seq_len, batch_size, train_per, val_per, pretrain=True, cu
 
 	# load the GloVe vectors
 	embed_dict = {}
-	with open('glove.6B.300d.txt', 'r', encoding='utf-8') as f:
+	with open('data/glove.6B.300d.txt', 'r', encoding='utf-8') as f:
 		for line in f:
 			values = line.split()
 			word = values[0]
