@@ -11,6 +11,10 @@ GCNFN and UPFD-GCNFN are implemented in ```gcnfn.py```
 
 UPFD-GCN and UPFD-SAGE are implemented in ```gnn.py```
 
+You can download the dataset via the link below:
+
+https://mega.nz/file/jwggTC4D#MT1cOOzAOOjMU8i_kBTJ07vO-jQUW6Tu_YKY_ON97h4
+
 To run the code, you need to install Python>=3.6 and following packages:
 
 ```
