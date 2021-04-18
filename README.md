@@ -1,8 +1,8 @@
 # Benchmarking GNN-based Fake News Detection
 [![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://codeocean.com/capsule/3568017/tree) [![Build Status](https://travis-ci.com/safe-graph/DGFraud.svg?branch=master)](https://travis-ci.com/safe-graph/DGFraud) ![PyPI](https://img.shields.io/pypi/v/torch-geometric)
 
+[Installation](#installation) | [Datasets](#datasets) | [User Guide](#user-guide) | [Leader Board](#leader-board) | [How to Contribute](#how-to-contribute)
 
-**Introduction** 
 
 This repo includes the implementation of our models and all baselines. The congfiguration can be setup with model arguments for each model. Note that the "hand" feature in model arguments represents the "Profile" feature.
 
@@ -19,14 +19,6 @@ SIGIR'21 ([PDF](https://arxiv.org/pdf/2005.00625.pdf))
   year={2021}
 }
 ```
-
-**Table of Contents**
-- [Installation](#installation)
-- [Datasets](#datasets)
-- [User Guide](#user-guide)
-- [Leader Board](#leader-board)
-- [How to Contribute](#how-to-contribute)
-
 
 CSI and SAFE are implemented in ```baselines.py```
 
