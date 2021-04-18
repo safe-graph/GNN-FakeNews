@@ -1,4 +1,6 @@
 # Benchmarking GNN-based Fake News Detection
+[![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://codeocean.com/capsule/3568017/tree) [![Build Status](https://travis-ci.com/safe-graph/DGFraud.svg?branch=master)](https://travis-ci.com/safe-graph/DGFraud) ![PyPI](https://img.shields.io/pypi/v/torch-geometric)
+
 
 **Introduction** 
 
