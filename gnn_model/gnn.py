@@ -3,41 +3,87 @@ import time
 from tqdm import tqdm
 import copy as cp
 
+import torch
 import torch.nn.functional as F
+from torch_geometric.nn import global_max_pool as gmp
+from torch_geometric.nn import GCNConv, SAGEConv, GATConv, DataParallel
 from torch.utils.data import random_split
 from torch_geometric.data import DataLoader, DataListLoader
-from torch_geometric.nn import DataParallel
-from torch.nn import Linear
-from torch_geometric.nn import global_mean_pool, GATConv
 
-from data_loader import *
+
+from utils.data_loader import *
 from eval_helper import *
 
 
 """
 
-The GCNFN implementation
+The GCN, GAT, and GraphSAGE  implementation
 
 """
 
 
+class Model(torch.nn.Module):
+	def __init__(self, args, concat=False):
+		super(Model, self).__init__()
+		self.args = args
+		self.num_features = args.num_features
+		self.nhid = args.nhid
+		self.num_classes = args.num_classes
+		self.dropout_ratio = args.dropout_ratio
+		self.model = args.model
+		self.concat = concat
+
+		if self.model == 'gcn':
+			self.conv1 = GCNConv(self.num_features, self.nhid)
+		elif self.model == 'sage':
+			self.conv1 = SAGEConv(self.num_features, self.nhid)
+		elif self.model == 'gat':
+			self.conv1 = GATConv(self.num_features, self.nhid)
+
+		if self.concat:
+			self.lin0 = torch.nn.Linear(self.num_features, self.nhid)
+			self.lin1 = torch.nn.Linear(self.nhid * 2, self.num_classes)
+		else:
+			self.lin1 = torch.nn.Linear(self.nhid, self.num_classes)
+
+	def forward(self, data):
+
+		x, edge_index, batch = data.x, data.edge_index, data.batch
+
+		edge_attr = None
+
+		x = F.relu(self.conv1(x, edge_index, edge_attr))
+		x = gmp(x, batch)
+
+		if self.concat:
+			news = torch.stack([data.x[(data.batch == idx).nonzero().squeeze()[0]] for idx in range(data.num_graphs)])
+			news = F.relu(self.lin0(news))
+			x = torch.cat([x, news], dim=1)
+			x = F.log_softmax(self.lin1(x), dim=-1)
+
+		else:
+			x = F.log_softmax(self.lin1(x), dim=-1)
+
+		return x
+
 parser = argparse.ArgumentParser()
 
-# original model parameters
 parser.add_argument('--seed', type=int, default=777, help='random seed')
 parser.add_argument('--device', type=str, default='cuda:0', help='specify cuda devices')
 
 # hyper-parameters
-parser.add_argument('--dataset', type=str, default='gossipcop', help='[politifact, gossipcop]')
+parser.add_argument('--dataset', type=str, default='politifact', help='[politifact, gossipcop]')
 parser.add_argument('--batch_size', type=int, default=128, help='batch size')
 parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
 parser.add_argument('--weight_decay', type=float, default=0.01, help='weight decay')
 parser.add_argument('--nhid', type=int, default=128, help='hidden size')
-parser.add_argument('--epochs', type=int, default=50, help='maximum number of epochs')
-parser.add_argument('--concat', type=bool, default=False, help='whether concat news embedding and graph embedding')
+parser.add_argument('--dropout_ratio', type=float, default=0.0, help='dropout ratio')
+parser.add_argument('--epochs', type=int, default=80, help='maximum number of epochs')
+parser.add_argument('--concat', type=bool, default=True, help='whether concat news embedding and graph embedding')
 parser.add_argument('--no_feature', type=bool, default=False, help='whether including node feature')
 parser.add_argument('--multi_gpu', type=bool, default=True, help='multi-gpu mode')
-parser.add_argument('--feature', type=str, default='content', help='feature type, [hand, glove, bert, content]')
+parser.add_argument('--feature', type=str, default='bert', help='feature type, [hand, glove, bert]')
+parser.add_argument('--model', type=str, default='sage', help='model type, [gcn, gat, sage]')
 
 args = parser.parse_args()
 torch.manual_seed(args.seed)
@@ -74,6 +120,7 @@ num_val = int(len(dataset) * 0.1)
 num_test = len(dataset) - (num_training + num_val)
 training_set, validation_set, test_set = random_split(dataset, [num_training, num_val, num_test])
 
+
 if args.multi_gpu:
 	loader = DataListLoader
 else:
@@ -83,33 +130,7 @@ train_loader = loader(training_set, batch_size=args.batch_size, shuffle=True)
 val_loader = loader(validation_set, batch_size=args.batch_size, shuffle=False)
 test_loader = loader(test_set, batch_size=args.batch_size, shuffle=False)
 
-
-class Net(torch.nn.Module):
-	def __init__(self):
-		super(Net, self).__init__()
-
-		self.num_features = dataset.num_features
-		self.nhid = args.nhid
-
-		self.conv1 = GATConv(self.num_features, self.nhid * 2)
-		self.conv2 = GATConv(self.nhid * 2, self.nhid * 2)
-
-		self.fc1 = Linear(self.nhid * 2, self.nhid)
-		self.fc2 = Linear(self.nhid, dataset.num_classes)
-
-	def forward(self, data):
-		x, edge_index, batch = data.x, data.edge_index, data.batch
-
-		x = F.selu(self.conv1(x, edge_index))
-		x = F.selu(self.conv2(x, edge_index))
-		x = F.selu(global_mean_pool(x, batch))
-		x = F.selu(self.fc1(x))
-		x = F.dropout(x, p=0.5, training=self.training)
-		x = self.fc2(x)
-		return F.log_softmax(x, dim=-1)
-
-
-model = Net().to(args.device)
+model = Model(args, concat=args.concat)
 if args.multi_gpu:
 	model = DataParallel(model)
 model = model.to(args.device)
@@ -117,9 +138,9 @@ optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.w
 
 
 def compute_test(loader, verbose=False):
+	out_log = []
 	model.eval()
 	loss_test = 0.0
-	out_log = []
 	with torch.no_grad():
 		for data in loader:
 			if not args.multi_gpu:
@@ -138,6 +159,10 @@ def compute_test(loader, verbose=False):
 
 if __name__ == '__main__':
 	# Model training
+
+	min_loss = 1e10
+	val_loss_values = []
+	best_epoch = 0
 	out_log = []
 
 	t = time.time()

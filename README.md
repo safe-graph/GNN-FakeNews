@@ -1,4 +1,4 @@
-# Benchmarking GNN-based Fake News Detection
+# A Collection of GNN-based Fake News Detection Models
 [![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://codeocean.com/capsule/3568017/tree) [![Build Status](https://travis-ci.com/safe-graph/DGFraud.svg?branch=master)](https://travis-ci.com/safe-graph/DGFraud) ![PyPI](https://img.shields.io/pypi/v/torch-geometric)
 
 [Installation](#installation) | [Datasets](#datasets) | [User Guide](#user-guide) | [Leader Board](#leader-board) | [How to Contribute](#how-to-contribute)
@@ -12,7 +12,7 @@ If you use the code in your project, please cite the following paper:
 
 SIGIR'21 ([PDF](https://arxiv.org/pdf/2005.00625.pdf))
 ```bibtex
-@inproceedings{liu2020alleviating,
+@inproceedings{dou2021user,
   title={User Preference-aware Fake News Detection},
   author={Dou, Yingtong and Shu, Kai and Xia, Congying and Yu, Philip S. and Sun, Lichao},
   booktitle={Proceedings of the 44nd International ACM SIGIR Conference on Research and Development in Information Retrieval},
@@ -20,31 +20,17 @@ SIGIR'21 ([PDF](https://arxiv.org/pdf/2005.00625.pdf))
 }
 ```
 
-CSI and SAFE are implemented in ```baselines.py```
-
-GNN-CL is implemented in ```gnncl.py```
-
-GCNFN and UPFD-GCNFN are implemented in ```gcnfn.py```
-
-UPFD-GCN and UPFD-SAGE are implemented in ```gnn.py```
-
 
 ## Installation
+
+To run the code in this repo, you need to have `Python>=3.6`, `PyTorch>=1.6`, and `PyTorch-Geometric>=1.6.1`. Please follow the installation instructions of [PyTorch-Geometric](https://github.com/rusty1s/pytorch_geometric) to install PyG.
+
+Other packages can be installed using following commands:
+
 ```bash
-git clone https://github.com/safe-graph/DGFraud.git
-cd DGFraud
-python setup.py install
-```
-### Requirements
-```bash
-* Python>=3.6
-* PyTorch>=1.6
-* PyTorch_Geometric>=1.6.1
-* keras>=2.2.4
-* scikit-learn>=0.22.1
-* tqdm>=4.31.1
-* numpy>=1.19.4
-* scipy>=1.5.2
+git clone https://github.com/safe-graph/GNN-FakeNews.git
+cd GNN-FakeNews
+pip install -r requirements.txt
 ```
 
 ## Datasets
@@ -89,52 +75,31 @@ The repository is organized as follows:
 
 ## Leader Board
 
-
-## Model Comparison
-| Model  | Application  | Graph Type  | Base Model  |
+### Politifact
+| Model  | Feature  | Accuracy  | F1  |
 |-------|--------|--------|--------|
-| **SemiGNN** | Financial Fraud  | Heterogeneous   | GAT, LINE, DeepWalk |
-| **Player2Vec** | Cyber Criminal  | Heterogeneous | GAT, GCN|
-| **GAS** | Opinion Fraud  | Heterogeneous | GCN, GAT |
-| **FdGars** |  Opinion Fraud | Homogeneous | GCN |
-| **GeniePath** | Financial Fraud | Homogeneous | GAT  |
-| **GEM** | Financial Fraud  | Heterogeneous |GCN |
-| **GraphSAGE** | Opinion Fraud  | Homogeneous   | GraphSAGE |
-| **GraphConsis** | Opinion Fraud  | Heterogeneous   | GraphSAGE |
-| **HACUD** | Financial Fraud | Heterogeneous | GAT |
+| **GCN** |  |  |  |
+| **GAT** |  |  |  |
+| **SAGE** |    |  |  |
+| **GIN** |   |  |   |
+| **GCNFN** |   |  |   |
+| **BiGCN** |    |  | |
+| **GNN-CL** |    |    |  |
+
+### Gossipcop
+| Model  | Feature  | Accuracy  | F1  |
+|-------|--------|--------|--------|
+| **GCN** |  |  |  |
+| **GAT** |  |  |  |
+| **SAGE** |    |  |  |
+| **GIN** |   |  |   |
+| **GCNFN** |   |  |   |
+| **BiGCN** |    |  | |
+| **GNN-CL** |    |    |  |
+
 
 
 ## How to Contribute
-You are welcomed to contribute to this open-source toolbox. The detailed instructions will be released soon. Currently, you can create issues or send email to [bdscsafegraph@gmail.com](mailto:bdscsafegraph@gmail.com) for inquiry.
+You are welcomed to submit your model, hyper-parameters, and results to this repo via create a pull request. After verifying the results, your model will be added to the benchmark.
 
 
-
-The hyperparameters are reported in the following table.
-
-### Politifact
-| model   | feature | epoch  | lr | emb_size | batch_num  |
-|-------|--------|--------|--------|-----------|-----------|
-| CSI  | news text  | 300  | 0.01 | 128 | 128  |
-| SAFE  | news text  | 300  | 0.01 | 128 | 128  |
-| GNN-CL  | Profile  | 60  | 0.001 | 128 | 128  |
-| GCNFN  | content  | 50  | 0.001 | 128 | 128  |
-| UPFD-GCN  | GloVe, Profile  | 60  | 0.001 | 128 | 128  |
-| UPFD-GCN  | BERT  | 100  | 0.001 | 128 | 128  |
-| UPFD-SAGE  | GloVe, Profile  | 100  | 0.001 | 128 | 128  |
-| UPFD-SAGE  | BERT  | 60  | 0.001 | 128 | 128  |
-| UPFD-GCNFN  | Profile  | 80  | 0.001 | 128 | 128  |
-| UPFD-GCNFN  | GloVe  | 60  | 0.001 | 128 | 128  |
-| UPFD-GCNFN  | BERT  | 45  | 0.001 | 128 | 128  |
-
-### Gossipcop
-| model   | feature | epoch  | lr | emb_size | batch_num  |
-|-------|--------|--------|--------|-----------|-----------|
-| CSI  | news text  | 150  | 0.01 | 128 | 128  |
-| SAFE  | news text  | 150  | 0.01 | 128 | 128  |
-| GNN-CL  | Profile  | 40  | 0.001 | 128 | 128  |
-| GCNFN  | content  | 50  | 0.001 | 128 | 128  |
-| UPFD-GCN  |Profile  | 50  | 0.01 | 128 | 128  |
-| UPFD-GCN  | GloVe, BERT  | 50  | 0.001 | 128 | 128  |
-| UPFD-SAGE  | Profile  | 50  | 0.01 | 128 | 128  |
-| UPFD-SAGE  | GloVe BERT  | 80  | 0.001 | 128 | 128  |
-| UPFD-GCNFN  | Profile, GloVe, BERT  | 50  | 0.001 | 128 | 128  |
