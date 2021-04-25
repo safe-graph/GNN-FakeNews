@@ -1,7 +1,7 @@
 import argparse
 import time
 from tqdm import tqdm
-
+import copy as cp
 import torch.nn.functional as F
 from torch.utils.data import random_split
 from torch_geometric.data import DataLoader, DataListLoader
@@ -26,7 +26,7 @@ Link: https://arxiv.org/pdf/1902.06673.pdf
 Model Configurations:
 
 Vanilla GCNFN: args.concat = False, args.feature = content
-UPFD-GCNFN: args.concat = True, args.feature = [spacy, bert, profile]
+UPFD-GCNFN: args.concat = False, args.feature = spacy
 
 """
 
@@ -47,9 +47,9 @@ class Net(torch.nn.Module):
 
 		if self.concat:
 			self.fc0 = Linear(self.num_features, self.nhid)
-			self.fc2 = Linear(self.nhid, self.num_classes)
-		else:
-			self.fc2 = Linear(self.nhid, self.num_classes)
+			self.fc1 = Linear(self.nhid * 2, self.nhid)
+
+		self.fc2 = Linear(self.nhid, self.num_classes)
 
 
 	def forward(self, data):
@@ -63,12 +63,11 @@ class Net(torch.nn.Module):
 
 		if self.concat:
 			news = torch.stack([data.x[(data.batch == idx).nonzero().squeeze()[0]] for idx in range(data.num_graphs)])
-			news = F.relu(self.lin0(news))
+			news = F.relu(self.fc0(news))
 			x = torch.cat([x, news], dim=1)
-			x = F.log_softmax(self.fc2(x), dim=-1)
+			x = F.relu(self.fc1(x))
 
-		else:
-			x = F.log_softmax(self.fc2(x), dim=-1)
+		x = F.log_softmax(self.fc2(x), dim=-1)
 
 		return x
 
@@ -104,10 +103,10 @@ parser.add_argument('--batch_size', type=int, default=128, help='batch size')
 parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
 parser.add_argument('--weight_decay', type=float, default=0.01, help='weight decay')
 parser.add_argument('--nhid', type=int, default=128, help='hidden size')
-parser.add_argument('--epochs', type=int, default=55, help='maximum number of epochs')
-parser.add_argument('--concat', type=bool, default=True, help='whether concat news embedding and graph embedding')
-parser.add_argument('--multi_gpu', type=bool, default=False, help='multi-gpu mode')
-parser.add_argument('--feature', type=str, default='content', help='feature type, [profile, spacy, bert, content]')
+parser.add_argument('--epochs', type=int, default=60, help='maximum number of epochs')
+parser.add_argument('--concat', type=bool, default=False, help='whether concat news embedding and graph embedding')
+parser.add_argument('--multi_gpu', type=bool, default=True, help='multi-gpu mode')
+parser.add_argument('--feature', type=str, default='spacy', help='feature type, [profile, spacy, bert, content]')
 
 args = parser.parse_args()
 torch.manual_seed(args.seed)
@@ -135,7 +134,7 @@ train_loader = loader(training_set, batch_size=args.batch_size, shuffle=True)
 val_loader = loader(validation_set, batch_size=args.batch_size, shuffle=False)
 test_loader = loader(test_set, batch_size=args.batch_size, shuffle=False)
 
-model = Net().to(args.device)
+model = Net(concat=args.concat).to(args.device)
 if args.multi_gpu:
 	model = DataParallel(model)
 model = model.to(args.device)

@@ -9,11 +9,12 @@ Model hyper-parameters are reported in the following table.
 | UPFD-GAT  |   |   |  |  |   |
 | UPFD-GCN  | spacy, profile  | 60  | 0.001 | 128 | 128  |
 | UPFD-GCN  | bert  | 100  | 0.001 | 128 | 128  |
-| UPFD-SAGE  | spacy, profile  | 70  | 0.01 | 128 | 128  |
-| UPFD-SAGE  | bert  | 50  | 0.01 | 128 | 128  |
+| UPFD-SAGE  | profile  | 70  | 0.01 | 128 | 128  |
+| UPFD-SAGE  | spacy  | 45  | 0.01 | 128 | 128  |
+| UPFD-SAGE  | bert  | 30  | 0.01 | 128 | 128  |
 | UPFD-GCNFN  | profile  | 80  | 0.001 | 128 | 128  |
-| UPFD-GCNFN  | spacy  | 60  | 0.001 | 128 | 128  |
-| UPFD-GCNFN  | bert  | 45  | 0.001 | 128 | 128  |
+| UPFD-GCNFN  | spacy  | 50  | 0.001 | 128 | 128  |
+| UPFD-GCNFN  | bert  | 60  | 0.001 | 128 | 128  |
 
 ### Gossipcop
 | model   | feature | epoch  | lr | emb_size | batch_num  |

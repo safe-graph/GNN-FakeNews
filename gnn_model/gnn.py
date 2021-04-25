@@ -42,9 +42,9 @@ class Model(torch.nn.Module):
 
 		if self.concat:
 			self.lin0 = torch.nn.Linear(self.num_features, self.nhid)
-			self.lin1 = torch.nn.Linear(self.nhid * 2, self.num_classes)
-		else:
-			self.lin1 = torch.nn.Linear(self.nhid, self.num_classes)
+			self.lin1 = torch.nn.Linear(self.nhid * 2, self.nhid)
+
+		self.lin2 = torch.nn.Linear(self.nhid, self.num_classes)
 
 	def forward(self, data):
 
@@ -59,10 +59,9 @@ class Model(torch.nn.Module):
 			news = torch.stack([data.x[(data.batch == idx).nonzero().squeeze()[0]] for idx in range(data.num_graphs)])
 			news = F.relu(self.lin0(news))
 			x = torch.cat([x, news], dim=1)
-			x = F.log_softmax(self.lin1(x), dim=-1)
+			x = F.relu(self.lin1(x))
 
-		else:
-			x = F.log_softmax(self.lin1(x), dim=-1)
+		x = F.log_softmax(self.lin2(x), dim=-1)
 
 		return x
 
@@ -95,15 +94,15 @@ parser.add_argument('--device', type=str, default='cuda:0', help='specify cuda d
 # hyper-parameters
 parser.add_argument('--dataset', type=str, default='politifact', help='[politifact, gossipcop]')
 parser.add_argument('--batch_size', type=int, default=128, help='batch size')
-parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
+parser.add_argument('--lr', type=float, default=0.01, help='learning rate')
 parser.add_argument('--weight_decay', type=float, default=0.01, help='weight decay')
 parser.add_argument('--nhid', type=int, default=128, help='hidden size')
 parser.add_argument('--dropout_ratio', type=float, default=0.0, help='dropout ratio')
-parser.add_argument('--epochs', type=int, default=60, help='maximum number of epochs')
+parser.add_argument('--epochs', type=int, default=35, help='maximum number of epochs')
 parser.add_argument('--concat', type=bool, default=True, help='whether concat news embedding and graph embedding')
 parser.add_argument('--multi_gpu', type=bool, default=False, help='multi-gpu mode')
-parser.add_argument('--feature', type=str, default='spacy', help='feature type, [profile, spacy, bert, content]')
-parser.add_argument('--model', type=str, default='gat', help='model type, [gcn, gat, sage]')
+parser.add_argument('--feature', type=str, default='bert', help='feature type, [profile, spacy, bert, content]')
+parser.add_argument('--model', type=str, default='sage', help='model type, [gcn, gat, sage]')
 
 args = parser.parse_args()
 torch.manual_seed(args.seed)
