@@ -41,7 +41,9 @@ pip install -r requirements.txt
 
 ## Datasets
 
-The dataset can be loaded using the PyG API. You can download the dataset via the link below:
+The dataset can be loaded using the PyG API. You can download the dataset via the link below and
+unzip the data under the `\data` directory.
+
 
 https://mega.nz/file/jwggTC4D#MT1cOOzAOOjMU8i_kBTJ07vO-jQUW6Tu_YKY_ON97h4
 
