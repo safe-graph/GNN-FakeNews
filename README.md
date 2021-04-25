@@ -1,16 +1,22 @@
-# A Collection of GNN-based Fake News Detection Models
-[![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://codeocean.com/capsule/3568017/tree) [![Build Status](https://travis-ci.com/safe-graph/DGFraud.svg?branch=master)](https://travis-ci.com/safe-graph/DGFraud) ![PyPI](https://img.shields.io/pypi/v/torch-geometric)
+# GNN-based Fake News Detection
+[![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://github.com/safe-graph/GNN-FakeNews) [![PyPI](https://img.shields.io/pypi/v/torch-geometric)](https://github.com/safe-graph/GNN-FakeNews/blob/main/LICENSE)
 
 [Installation](#installation) | [Datasets](#datasets) | [User Guide](#user-guide) | [Leader Board](#leader-board) | [How to Contribute](#how-to-contribute)
 
 
-This repo includes the implementation of our models and all baselines. The congfiguration can be setup with model arguments for each model. Note that the "hand" feature in model arguments represents the "Profile" feature.
+This repo includes the Pytorch-Geometric implementation of a series of Graph Neural Network (GNN) based fake news detection models.
+All [GNN models](#leader-board) are implemented and evaluated under the User Preference-aware Fake News Detection (UPFD) framework.
+The fake news detection problem is instantiated as a graph classification task under the UPFD framework. 
 
-We welcome contributions on adding new fraud detectors and extending the features of the toolbox. Some of the planned features are listed in [TODO list](#todo-list). 
+
+You can run the code on virtual machine hosted by Code Ocean.
+
+We welcome contributions of SOTA results of existing models and results new models based on our dataset.
+You can check the [Leader Board](#leader-board) for implemented models and their performances.
 
 If you use the code in your project, please cite the following paper:
 
-SIGIR'21 ([PDF](https://arxiv.org/pdf/2005.00625.pdf))
+SIGIR'21 ([PDF](https://github.com/safe-graph/GNN-FakeNews))
 ```bibtex
 @inproceedings{dou2021user,
   title={User Preference-aware Fake News Detection},
@@ -20,12 +26,12 @@ SIGIR'21 ([PDF](https://arxiv.org/pdf/2005.00625.pdf))
 }
 ```
 
-
 ## Installation
 
-To run the code in this repo, you need to have `Python>=3.6`, `PyTorch>=1.6`, and `PyTorch-Geometric>=1.6.1`. Please follow the installation instructions of [PyTorch-Geometric](https://github.com/rusty1s/pytorch_geometric) to install PyG.
+To run the code in this repo, you need to have `Python>=3.6`, `PyTorch>=1.6`, and `PyTorch-Geometric>=1.6.1`.
+Please follow the installation instructions of [PyTorch-Geometric](https://github.com/rusty1s/pytorch_geometric) to install PyG.
 
-Other packages can be installed using following commands:
+Other dependencies can be installed using the following commands:
 
 ```bash
 git clone https://github.com/safe-graph/GNN-FakeNews.git
@@ -35,71 +41,86 @@ pip install -r requirements.txt
 
 ## Datasets
 
-You can download the dataset via the link below:
+The dataset can be loaded using the PyG API. You can download the dataset via the link below:
 
 https://mega.nz/file/jwggTC4D#MT1cOOzAOOjMU8i_kBTJ07vO-jQUW6Tu_YKY_ON97h4
 
+The dataset includes fake&real news propagation networks on Twitter built according to fact-check information from
+[Politifact](https://www.politifact.com/) and [Gossipcop](https://www.gossipcop.com/).
+The news retweet graphs were originally extracted by [FakeNewsNet](https://github.com/KaiDMML/FakeNewsNet).
+We crawled near 20 million historical tweets from users participated in fake news propagation in FakeNewsNet to
+generate user features in the dataset.
+
+The statistics of the dataset is shown below:
+
+| Data  | #Graphs  | #Total Nodes  | #Total Edges  | #Avg. Nodes per Graph  |
+|-------|--------|--------|--------|--------|
+| Politifact | 314   |  41,054  | 40,740 |  131 |
+| Gossipcop |  5464  |  314,262  | 308,798  |  58  |
+
+
+Due to the Twitter policy, we could not release the crawled user historical tweets publicly.
+To get the corresponding Twitter user information, you can refer to news list under `\data`
+and map the news id to [FakeNewsNet](https://github.com/KaiDMML/FakeNewsNet).
+Then, you can get the twitter user id and their information accordint to instructions on FakeNewsNet.
+In our case, we use [Tweepy](https://www.tweepy.org/) and [Twitter Developer API](https://developer.twitter.com/en) to get the user information.
+
+We incorporate four feature types in the dataset, the 768-dimensional `bert` and 300-dimensional `spacy` features 
+are encoded using pretrained [BERT](https://github.com/hanxiao/bert-as-service) and [spaCy](https://spacy.io/models/en#en_core_web_lg) word2vec, respectively.
+The 10-dimensional `profile` feature is obtained from a Twitter account's profile.
+You can refer to [profile_feature.py](https://github.com/safe-graph/GNN-FakeNews/blob/master/utils/profile_feature.py) for profile feature extraction.
+The 310-dimensional `content` feature is composed of 300-dimensional user comment word2vec (spaCy) embeddings
+plus 10-dimensional profile features.
+
+The graph data is a tree-structured social context graph where the root node represents the news,
+the leaf nodes are Twitter users who retweeted the root news.
+The following figure shows the UPFD framework including the dataset construction details 
+You can refer to the [paper](https://arxiv.org/pdf/2005.00625.pdf) for more details about the dataset.
+
+<p align="center">
+    <br>
+    <a href="https://github.com/safe-graph/GNN-FakeNews">
+        <img src="https://github.com/safe-graph/GNN-FakeNews/blob/master/overview.png" width="600"/>
+    </a>
+    <br>
+<p>
+
 ## User Guide
 
-### Running the example code
-You can find the implemented models in `algorithms` directory. For example, you can run Player2Vec using:
-```bash
-python Player2Vec_main.py 
-```
-You can specify parameters for models when running the code.
+All GNN-based fake news detection models are under the `\gnn_model` directory.
+You can fine-tune each model according to arguments specified in the argparser of each code.
 
-### Running on your datasets
-Have a look at the load_data_dblp() function in utils/utils.py for an example.
-
-In order to use your own data, you have to provide:
-* adjacency matrices or adjlists (for GAS);
-* a feature matrix
-* a label matrix
-then split feature matrix and label matrix into testing data and training data.
-
-You can specify a dataset as follows:
-```bash
-python xx_main.py --dataset your_dataset 
-```
-or by editing xx_main.py
-
-### The structure of code
-The repository is organized as follows:
-- `algorithms/` contains the implemented models and the corresponding example code;
-- `base_models/` contains the basic models (GCN);
-- `dataset/` contains the necessary dataset files;
-- `utils/` contains:
-    * loading and splitting the data (`data_loader.py`);
-    * contains various utilities (`utils.py`).
-
+Since the UPFD framework is built upon the [PyG](https://github.com/rusty1s/pytorch_geometric), you can easily try other graph classification models
+like [GIN](https://github.com/rusty1s/pytorch_geometric/blob/master/examples/mutag_gin.py) and [HGP-SL](https://github.com/cszhangzhen/HGP-SL)
+under our dataset.
 
 ## Leader Board
+
+To be updated.
 
 ### Politifact
 | Model  | Feature  | Accuracy  | F1  |
 |-------|--------|--------|--------|
-| **GCN** |  |  |  |
-| **GAT** |  |  |  |
-| **SAGE** |    |  |  |
-| **GIN** |   |  |   |
+| **GNN-CL** |    |    |  |
 | **GCNFN** |   |  |   |
 | **BiGCN** |    |  | |
-| **GNN-CL** |    |    |  |
+| **UPFD-GCN** |  |  |  |
+| **UPFD-GAT** |  |  |  |
+| **UPFD-SAGE** |    |  |  |
 
 ### Gossipcop
 | Model  | Feature  | Accuracy  | F1  |
 |-------|--------|--------|--------|
-| **GCN** |  |  |  |
-| **GAT** |  |  |  |
-| **SAGE** |    |  |  |
-| **GIN** |   |  |   |
+| **GNN-CL** |    |    |  |
 | **GCNFN** |   |  |   |
 | **BiGCN** |    |  | |
-| **GNN-CL** |    |    |  |
-
-
+| **UPFD-GCN** |  |  |  |
+| **UPFD-GAT** |  |  |  |
+| **UPFD-SAGE** |    |  |  |
 
 ## How to Contribute
-You are welcomed to submit your model, hyper-parameters, and results to this repo via create a pull request. After verifying the results, your model will be added to the benchmark.
+You are welcomed to submit your model, hyper-parameters, and results to this repo via create a pull request.
+After verifying the results, your model will be added to the repo and the result will be updated to the leaderboard.
+For other inquiries, please send email to [ytongdou@gmail.com](mailto:ytongdou@gmail.com).
 
 

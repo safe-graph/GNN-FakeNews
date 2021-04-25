@@ -2,3 +2,9 @@
 *.xml
 *.iml
 .idea/dictionaries
+data/gossipcop/raw/A.txt
+*.npy
+*.npz
+*.pt
+data/politifact/raw/A.txt
+*.zip
