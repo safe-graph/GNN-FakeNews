@@ -1,5 +1,8 @@
 # GNN-based Fake News Detection
-[![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://github.com/safe-graph/GNN-FakeNews) [![PyPI](https://img.shields.io/pypi/v/torch-geometric)](https://github.com/safe-graph/GNN-FakeNews/blob/main/LICENSE)
+[![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://github.com/safe-graph/GNN-FakeNews)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/?branch=main)
+[![LICENSE](https://img.shields.io/github/license/safe-graph/GNN-FakeNews)](https://github.com/safe-graph/GNN-FakeNews/blob/main/LICENSE)
+
 
 [Installation](#installation) | [Datasets](#datasets) | [User Guide](#user-guide) | [Leader Board](#leader-board) | [How to Contribute](#how-to-contribute)
 
@@ -41,11 +44,10 @@ pip install -r requirements.txt
 
 ## Datasets
 
-The dataset can be loaded using the PyG API. You can download the dataset via the link below and
+The dataset can be loaded using the PyG API. You can download the dataset (2.66GB) via the link below and
 unzip the data under the `\data` directory.
 
-
-https://mega.nz/file/jwggTC4D#MT1cOOzAOOjMU8i_kBTJ07vO-jQUW6Tu_YKY_ON97h4
+https://mega.nz/file/j5ZFEK7Z#KDnX2sjg65cqXsIRi0cVh6cvp7CDJZh1Zlm9-Xt28d4
 
 The dataset includes fake&real news propagation networks on Twitter built according to fact-check information from
 [Politifact](https://www.politifact.com/) and [Gossipcop](https://www.gossipcop.com/).
@@ -82,7 +84,7 @@ You can refer to the [paper](https://arxiv.org/pdf/2005.00625.pdf) for more deta
 <p align="center">
     <br>
     <a href="https://github.com/safe-graph/GNN-FakeNews">
-        <img src="https://github.com/safe-graph/GNN-FakeNews/blob/master/overview.png" width="600"/>
+        <img src="https://github.com/safe-graph/GNN-FakeNews/blob/main/overview.png" width="1000"/>
     </a>
     <br>
 <p>
@@ -103,22 +105,22 @@ To be updated.
 ### Politifact
 | Model  | Feature  | Accuracy  | F1  |
 |-------|--------|--------|--------|
-| **GNN-CL** |    |    |  |
-| **GCNFN** |   |  |   |
-| **BiGCN** |    |  | |
-| **UPFD-GCN** |  |  |  |
-| **UPFD-GAT** |  |  |  |
-| **UPFD-SAGE** |    |  |  |
+| **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** |    |    |  |
+| **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)** |   |  |   |
+| **[BiGCN](https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
+| **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)** |  |  |  |
+| **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)** |  |  |  |
+| **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)** |    |  |  |
 
 ### Gossipcop
 | Model  | Feature  | Accuracy  | F1  |
 |-------|--------|--------|--------|
-| **GNN-CL** |    |    |  |
-| **GCNFN** |   |  |   |
-| **BiGCN** |    |  | |
-| **UPFD-GCN** |  |  |  |
-| **UPFD-GAT** |  |  |  |
-| **UPFD-SAGE** |    |  |  |
+| **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** |    |    |  |
+| **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)** |   |  |   |
+| **[BiGCN](https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
+| **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)** |  |  |  |
+| **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)** |  |  |  |
+| **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)** |    |  |  |
 
 ## How to Contribute
 You are welcomed to submit your model, hyper-parameters, and results to this repo via create a pull request.
