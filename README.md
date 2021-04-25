@@ -85,7 +85,7 @@ You can refer to the [paper](https://arxiv.org/pdf/2005.00625.pdf) for more deta
 <p align="center">
     <br>
     <a href="https://github.com/safe-graph/GNN-FakeNews">
-        <img src="https://github.com/safe-graph/GNN-FakeNews/blob/main/overview.png" width="600"/>
+        <img src="https://github.com/safe-graph/GNN-FakeNews/blob/main/overview.png" width="1000"/>
     </a>
     <br>
 <p>
