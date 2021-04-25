@@ -107,7 +107,7 @@ To be updated.
 |-------|--------|--------|--------|
 | **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** |    |    |  |
 | **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)** |   |  |   |
-| **[BiGCN](Link: https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
+| **[BiGCN](https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
 | **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)** |  |  |  |
 | **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)** |  |  |  |
 | **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)** |    |  |  |
@@ -117,7 +117,7 @@ To be updated.
 |-------|--------|--------|--------|
 | **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** |    |    |  |
 | **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)** |   |  |   |
-| **[BiGCN](Link: https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
+| **[BiGCN](https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
 | **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)** |  |  |  |
 | **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)** |  |  |  |
 | **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)** |    |  |  |
