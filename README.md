@@ -1,6 +1,5 @@
 # GNN-based Fake News Detection
 [![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://github.com/safe-graph/GNN-FakeNews)
-[![Build Status](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/badges/build.png?b=main)](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/build-status/main)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/?branch=main)
 [![LICENSE](https://img.shields.io/github/license/safe-graph/GNN-FakeNews)](https://github.com/safe-graph/GNN-FakeNews/blob/main/LICENSE)
 
