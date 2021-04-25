@@ -3,7 +3,7 @@ import os.path as osp
 import torch
 from torch_geometric.data import Data
 from torch_geometric.data import InMemoryDataset
-from torch_geometric.utils import remove_self_loops, to_undirected, add_self_loops
+from torch_geometric.utils import to_undirected, add_self_loops
 from torch_sparse import coalesce
 from torch_geometric.io import read_txt_array
 
@@ -21,6 +21,10 @@ def read_file(folder, name, dtype=None):
 
 
 def split(data, batch):
+	"""
+	PyG util code to create graph batches
+	"""
+
 	node_slice = torch.cumsum(torch.from_numpy(np.bincount(batch)), 0)
 	node_slice = torch.cat([torch.tensor([0]), node_slice])
 
@@ -47,6 +51,9 @@ def split(data, batch):
 
 
 def read_graph_data(folder, feature):
+	"""
+	PyG util code to create PyG data instance from raw graph data
+	"""
 
 	node_attributes = sp.load_npz(folder + f'new_{feature}_feature.npz')
 	edge_index = read_file(folder, 'A', torch.long).t()
@@ -72,7 +79,7 @@ def read_graph_data(folder, feature):
 class ToUndirected:
 	def __init__(self):
 		"""
-		Transform the graph to the undirected graph
+		PyG util code to transform the graph to the undirected graph
 		"""
 		pass
 
@@ -88,15 +95,15 @@ class ToUndirected:
 
 
 class DropEdge:
-	def __init__(self, tddroprate, budroprate, self_loop=False):
+	def __init__(self, tddroprate, budroprate):
 		"""
-		Drop the graph edges according to BiGCN
+		Drop edge operation from BiGCN (Rumor Detection on Social Media with Bi-Directional Graph Convolutional Networks)
 		1) Generate TD and BU edge indices
 		2) Drop out edges
+		Code from https://github.com/TianBian95/BiGCN/blob/master/Process/dataset.py
 		"""
 		self.tddroprate = tddroprate
 		self.budroprate = budroprate
-		self.self_loop = self_loop
 
 	def __call__(self, data):
 		edge_index = data.edge_index
@@ -127,11 +134,6 @@ class DropEdge:
 
 		data.edge_index = torch.LongTensor(new_edgeindex)
 		data.BU_edge_index = torch.LongTensor(bunew_edgeindex)
-		if self.self_loop:
-			mask_1 = data.edge_index[0, :] == data.edge_index[1, :]
-			data.edge_index = torch.masked_select(data.edge_index, mask_1).reshape(2, -1)
-			mask_2 = data.BU_edge_index[0, :] == data.BU_edge_index[1, :]
-			data.BU_edge_index = torch.masked_select(data.BU_edge_index, mask_2).reshape(2, -1)
 		data.root = torch.FloatTensor(data.x[0])
 		data.root_index = torch.LongTensor([0])
 
@@ -161,7 +163,7 @@ class FNNDataset(InMemoryDataset):
 			final dataset. (default: :obj:`None`)
 	"""
 
-	def __init__(self, root, name, feature='bow', empty=False, transform=None, pre_transform=None, pre_filter=None):
+	def __init__(self, root, name, feature='spacy', empty=False, transform=None, pre_transform=None, pre_filter=None):
 		self.name = name
 		self.root = root
 		self.feature = feature

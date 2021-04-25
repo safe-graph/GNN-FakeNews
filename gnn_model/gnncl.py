@@ -10,61 +10,16 @@ from torch_geometric.nn import DenseSAGEConv, dense_diff_pool
 from torch.utils.data import random_split
 
 from utils.data_loader import *
-from eval_helper import *
+from utils.eval_helper import *
 
 """
 
-The GNN-CL is implemented using DiffPool
+The GNN-CL is implemented using DiffPool as the graph encoder and profile feature as the node feature 
+
+Paper: Graph Neural Networks with Continual Learning for Fake News Detection from Social Media
+Link: https://arxiv.org/pdf/2007.03316.pdf
 
 """
-
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--seed', type=int, default=777, help='random seed')
-# hyper-parameters
-parser.add_argument('--dataset', type=str, default='politifact', help='[politifact, gossipcop]')
-parser.add_argument('--batch_size', type=int, default=128, help='batch size')
-parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
-parser.add_argument('--weight_decay', type=float, default=0.001, help='weight decay')
-parser.add_argument('--nhid', type=int, default=128, help='hidden size')
-parser.add_argument('--epochs', type=int, default=60, help='maximum number of epochs')
-parser.add_argument('--concat', type=bool, default=False, help='whether concat news embedding and graph embedding')
-parser.add_argument('--no_feature', type=bool, default=False, help='whether including node feature')
-parser.add_argument('--self_loop', type=bool, default=False, help='whether only keeping self loops')
-parser.add_argument('--feature', type=str, default='hand', help='feature type, [hand, glove, bert]')
-
-args = parser.parse_args()
-torch.manual_seed(args.seed)
-if torch.cuda.is_available():
-	torch.cuda.manual_seed(args.seed)
-
-if args.dataset == 'politifact':
-	max_nodes = 500
-else:
-	max_nodes = 200 
-
-
-dataset = FNNDataset(root='data', feature=args.feature, empty=False, name=args.dataset,
-					 transform=T.ToDense(max_nodes), pre_transform=ToUndirected())
-
-
-if args.no_feature:
-	dataset.data.x = torch.ones(dataset.data.x.shape)
-
-print(args)
-
-if args.self_loop:
-	mask = dataset.data.edge_index[0, :] == dataset.data.edge_index[1, :]
-	dataset.data.edge_index = torch.masked_select(dataset.data.edge_index, mask).reshape(2, -1)
-
-num_training = int(len(dataset) * 0.2)
-num_val = int(len(dataset) * 0.1)
-num_test = len(dataset) - (num_training + num_val)
-training_set, validation_set, test_set = random_split(dataset, [num_training, num_val, num_test])
-
-train_loader = DenseDataLoader(training_set, batch_size=args.batch_size, shuffle=True)
-val_loader = DenseDataLoader(validation_set, batch_size=args.batch_size, shuffle=False)
-test_loader = DenseDataLoader(test_set, batch_size=args.batch_size, shuffle=False)
 
 
 class GNN(torch.nn.Module):
@@ -144,12 +99,7 @@ class Net(torch.nn.Module):
 		return F.log_softmax(x, dim=-1), l1 + l2, e1 + e2
 
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = Net(in_channels=dataset.num_features, num_classes=dataset.num_classes).to(device)
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-
-
-def train(epoch):
+def train():
 	model.train()
 	loss_all = 0
 	out_log = []
@@ -162,7 +112,7 @@ def train(epoch):
 		loss.backward()
 		loss_all += data.y.size(0) * loss.item()
 		optimizer.step()
-	return eval_deep(out_log), loss_all / len(train_loader.dataset)
+	return eval_deep(out_log, train_loader), loss_all / len(train_loader.dataset)
 
 
 @torch.no_grad()
@@ -176,11 +126,52 @@ def test(loader):
 		out, _, _ = model(data.x, data.adj, data.mask)
 		out_log.append([F.softmax(out, dim=1), data.y])
 		loss_test += data.y.size(0) * F.nll_loss(out, data.y.view(-1)).item()
-	return eval_deep(out_log), loss_test / len(loader.dataset)
+	return eval_deep(out_log, loader), loss_test
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--seed', type=int, default=777, help='random seed')
+# hyper-parameters
+parser.add_argument('--dataset', type=str, default='politifact', help='[politifact, gossipcop]')
+parser.add_argument('--batch_size', type=int, default=128, help='batch size')
+parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
+parser.add_argument('--weight_decay', type=float, default=0.001, help='weight decay')
+parser.add_argument('--nhid', type=int, default=128, help='hidden size')
+parser.add_argument('--epochs', type=int, default=60, help='maximum number of epochs')
+parser.add_argument('--feature', type=str, default='profile', help='feature type, [profile, spacy, bert, content]')
+
+args = parser.parse_args()
+torch.manual_seed(args.seed)
+if torch.cuda.is_available():
+	torch.cuda.manual_seed(args.seed)
+
+if args.dataset == 'politifact':
+	max_nodes = 500
+else:
+	max_nodes = 200 
+
+
+dataset = FNNDataset(root='data', feature=args.feature, empty=False, name=args.dataset,
+					 transform=T.ToDense(max_nodes), pre_transform=ToUndirected())
+
+print(args)
+
+num_training = int(len(dataset) * 0.2)
+num_val = int(len(dataset) * 0.1)
+num_test = len(dataset) - (num_training + num_val)
+training_set, validation_set, test_set = random_split(dataset, [num_training, num_val, num_test])
+
+train_loader = DenseDataLoader(training_set, batch_size=args.batch_size, shuffle=True)
+val_loader = DenseDataLoader(validation_set, batch_size=args.batch_size, shuffle=False)
+test_loader = DenseDataLoader(test_set, batch_size=args.batch_size, shuffle=False)
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = Net(in_channels=dataset.num_features, num_classes=dataset.num_classes).to(device)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 
 for epoch in tqdm(range(args.epochs)):
-	[acc_train, _, _, _, recall_train, auc_train, _], loss_train = train(epoch)
+	[acc_train, _, _, _, recall_train, auc_train, _], loss_train = train()
 	[acc_val, _, _, _, recall_val, auc_val, _], loss_val = test(val_loader)
 	print(f'loss_train: {loss_train:.4f}, acc_train: {acc_train:.4f},'
 		  f' recall_train: {recall_train:.4f}, auc_train: {auc_train:.4f},'
