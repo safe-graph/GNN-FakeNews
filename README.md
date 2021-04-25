@@ -105,22 +105,22 @@ To be updated.
 ### Politifact
 | Model  | Feature  | Accuracy  | F1  |
 |-------|--------|--------|--------|
-| **GNN-CL** |    |    |  |
-| **GCNFN** |   |  |   |
-| **BiGCN** |    |  | |
-| **UPFD-GCN** |  |  |  |
-| **UPFD-GAT** |  |  |  |
-| **UPFD-SAGE** |    |  |  |
+| **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** |    |    |  |
+| **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)** |   |  |   |
+| **[BiGCN](Link: https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
+| **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)** |  |  |  |
+| **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)** |  |  |  |
+| **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)** |    |  |  |
 
 ### Gossipcop
 | Model  | Feature  | Accuracy  | F1  |
 |-------|--------|--------|--------|
-| **GNN-CL** |    |    |  |
-| **GCNFN** |   |  |   |
-| **BiGCN** |    |  | |
-| **UPFD-GCN** |  |  |  |
-| **UPFD-GAT** |  |  |  |
-| **UPFD-SAGE** |    |  |  |
+| **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** |    |    |  |
+| **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)** |   |  |   |
+| **[BiGCN](Link: https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
+| **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)** |  |  |  |
+| **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)** |  |  |  |
+| **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)** |    |  |  |
 
 ## How to Contribute
 You are welcomed to submit your model, hyper-parameters, and results to this repo via create a pull request.
