@@ -26,7 +26,7 @@ Link: https://arxiv.org/pdf/1902.06673.pdf
 Model Configurations:
 
 Vanilla GCNFN: args.concat = False, args.feature = content
-UPFD-GCNFN: args.concat = False, args.feature = spacy
+UPFD-GCNFN: args.concat = True, args.feature = spacy
 
 """
 
@@ -105,7 +105,7 @@ parser.add_argument('--weight_decay', type=float, default=0.01, help='weight dec
 parser.add_argument('--nhid', type=int, default=128, help='hidden size')
 parser.add_argument('--epochs', type=int, default=60, help='maximum number of epochs')
 parser.add_argument('--concat', type=bool, default=False, help='whether concat news embedding and graph embedding')
-parser.add_argument('--multi_gpu', type=bool, default=True, help='multi-gpu mode')
+parser.add_argument('--multi_gpu', type=bool, default=False, help='multi-gpu mode')
 parser.add_argument('--feature', type=str, default='spacy', help='feature type, [profile, spacy, bert, content]')
 
 args = parser.parse_args()

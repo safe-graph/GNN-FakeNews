@@ -12,9 +12,9 @@ All [GNN models](#leader-board) are implemented and evaluated under the User Pre
 The fake news detection problem is instantiated as a graph classification task under the UPFD framework. 
 
 
-You can run the code on virtual machine hosted by Code Ocean.
+You can run the project on the virtual machine hosted by the Code Ocean without manual configuration.
 
-We welcome contributions of SOTA results of existing models and results new models based on our dataset.
+We welcome contributions of results of existing models and the SOTA results of new models based on our dataset.
 You can check the [Leader Board](#leader-board) for implemented models and their performances.
 
 If you use the code in your project, please cite the following paper:
@@ -66,8 +66,8 @@ The statistics of the dataset is shown below:
 Due to the Twitter policy, we could not release the crawled user historical tweets publicly.
 To get the corresponding Twitter user information, you can refer to news list under `\data`
 and map the news id to [FakeNewsNet](https://github.com/KaiDMML/FakeNewsNet).
-Then, you can get the twitter user id and their information accordint to instructions on FakeNewsNet.
-In our case, we use [Tweepy](https://www.tweepy.org/) and [Twitter Developer API](https://developer.twitter.com/en) to get the user information.
+Then, you can get the Twitter user id and their information following instructions on FakeNewsNet.
+In this project, we use [Tweepy](https://www.tweepy.org/) and [Twitter Developer API](https://developer.twitter.com/en) to get the user information.
 
 We incorporate four feature types in the dataset, the 768-dimensional `bert` and 300-dimensional `spacy` features 
 are encoded using pretrained [BERT](https://github.com/hanxiao/bert-as-service) and [spaCy](https://spacy.io/models/en#en_core_web_lg) word2vec, respectively.
@@ -92,7 +92,7 @@ You can refer to the [paper](https://arxiv.org/pdf/2005.00625.pdf) for more deta
 ## User Guide
 
 All GNN-based fake news detection models are under the `\gnn_model` directory.
-You can fine-tune each model according to arguments specified in the argparser of each code.
+You can fine-tune each model according to arguments specified in the argparser of each model.
 
 Since the UPFD framework is built upon the [PyG](https://github.com/rusty1s/pytorch_geometric), you can easily try other graph classification models
 like [GIN](https://github.com/rusty1s/pytorch_geometric/blob/master/examples/mutag_gin.py) and [HGP-SL](https://github.com/cszhangzhen/HGP-SL)
