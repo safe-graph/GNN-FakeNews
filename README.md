@@ -14,7 +14,7 @@ The fake news detection problem is instantiated as a graph classification task u
 You can make reproducible run on the virtual machine hosted by the Code Ocean without manual configuration.
 
 We welcome contributions of results of existing models and the SOTA results of new models based on our dataset.
-You can check the benchmark(https://paperswithcode.com/dataset/upfd) hosted by PaperWithCode for implemented models and their performances.
+You can check the [benchmark](https://paperswithcode.com/dataset/upfd) hosted by PaperWithCode for implemented models and their performances.
 
 If you use the code in your project, please cite the following paper:
 
