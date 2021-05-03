@@ -92,34 +92,19 @@ You can refer to the [paper](https://arxiv.org/pdf/2005.00625.pdf) for more deta
 
 All GNN-based fake news detection models are under the `\gnn_model` directory.
 You can fine-tune each model according to arguments specified in the argparser of each model.
+The implemented models are as follows:
+
+* **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** 
+* **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)**
+* **[BiGCN](https://arxiv.org/pdf/2001.06362.pdf)**
+* **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)**
+* **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)**
+* **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)**
 
 Since the UPFD framework is built upon the [PyG](https://github.com/rusty1s/pytorch_geometric), you can easily try other graph classification models
 like [GIN](https://github.com/rusty1s/pytorch_geometric/blob/master/examples/mutag_gin.py) and [HGP-SL](https://github.com/cszhangzhen/HGP-SL)
 under our dataset.
 
-## Leader Board
-
-To be updated.
-
-### Politifact
-| Model  | Feature  | Accuracy  | F1  |
-|-------|--------|--------|--------|
-| **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** |    |    |  |
-| **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)** |   |  |   |
-| **[BiGCN](https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
-| **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)** |  |  |  |
-| **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)** |  |  |  |
-| **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)** |    |  |  |
-
-### Gossipcop
-| Model  | Feature  | Accuracy  | F1  |
-|-------|--------|--------|--------|
-| **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** |    |    |  |
-| **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)** |   |  |   |
-| **[BiGCN](https://arxiv.org/pdf/2001.06362.pdf)** |    |  | |
-| **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)** |  |  |  |
-| **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)** |  |  |  |
-| **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)** |    |  |  |
 
 ## How to Contribute
 You are welcomed to submit your model, hyper-parameters, and results to this repo via create a pull request.
