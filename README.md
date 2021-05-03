@@ -1,20 +1,20 @@
 # GNN-based Fake News Detection
 [![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://github.com/safe-graph/GNN-FakeNews)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/?branch=main)
-[![LICENSE](https://img.shields.io/github/license/safe-graph/GNN-FakeNews)](https://github.com/safe-graph/GNN-FakeNews/blob/main/LICENSE)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/user-preference-aware-fake-news-detection/graph-classification-on-upfd-gos)](https://paperswithcode.com/sota/graph-classification-on-upfd-gos?p=user-preference-aware-fake-news-detection)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/user-preference-aware-fake-news-detection/graph-classification-on-upfd-pol)](https://paperswithcode.com/sota/graph-classification-on-upfd-pol?p=user-preference-aware-fake-news-detection)
 
-
-[Installation](#installation) | [Datasets](#datasets) | [User Guide](#user-guide) | [Leader Board](#leader-board) | [How to Contribute](#how-to-contribute)
+[Installation](#installation) | [Datasets](#datasets) | [User Guide](#user-guide) | [Benchmark](https://paperswithcode.com/dataset/upfd) | [How to Contribute](#how-to-contribute)
 
 
 This repo includes the Pytorch-Geometric implementation of a series of Graph Neural Network (GNN) based fake news detection models.
 All [GNN models](#leader-board) are implemented and evaluated under the User Preference-aware Fake News Detection (UPFD) framework.
 The fake news detection problem is instantiated as a graph classification task under the UPFD framework. 
 
-You can run the project on the virtual machine hosted by the Code Ocean without manual configuration.
+You can make reproducible run on the virtual machine hosted by the Code Ocean without manual configuration.
 
 We welcome contributions of results of existing models and the SOTA results of new models based on our dataset.
-You can check the [Leader Board](#leader-board) for implemented models and their performances.
+You can check the benchmark(https://paperswithcode.com/dataset/upfd) hosted by PaperWithCode for implemented models and their performances.
 
 If you use the code in your project, please cite the following paper:
 
