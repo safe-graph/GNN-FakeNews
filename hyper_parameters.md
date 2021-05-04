@@ -5,8 +5,8 @@ Model hyper-parameters are reported in the following table.
 |-------|--------|--------|--------|-----------|-----------|
 | GNN-CL  | profile  | 60  | 0.001 | 128 | 128  |
 | GCNFN  | content  | 100  | 0.001 | 128 | 128  |
-| BiGCN  |   |   |  |  |   |
-| UPFD-GAT  |   |   |  |  |   |
+| BiGCN  |  bert | 50  | 0.001 | 128 | 128  |
+| UPFD-GAT  | bert  | 50  | 0.001 | 128 | 128  |
 | UPFD-GCN  | spacy, profile  | 60  | 0.001 | 128 | 128  |
 | UPFD-GCN  | bert  | 100  | 0.001 | 128 | 128  |
 | UPFD-SAGE  | profile  | 70  | 0.01 | 128 | 128  |
@@ -21,8 +21,8 @@ Model hyper-parameters are reported in the following table.
 |-------|--------|--------|--------|-----------|-----------|
 | GNN-CL  | profile  | 40  | 0.001 | 128 | 128  |
 | GCNFN  | content  | 50  | 0.001 | 128 | 128  |
-| BiGCN  |   |   |  |  |   |
-| UPFD-GAT  |   |   |  |  |   |
+| BiGCN  |  bert | 35  | 0.001 | 128 | 128  |
+| UPFD-GAT  | bert  | 30  | 0.001 | 128 | 128  |
 | UPFD-GCN  |profile  | 50  | 0.01 | 128 | 128  |
 | UPFD-GCN  | spacy, bert  | 50  | 0.001 | 128 | 128  |
 | UPFD-SAGE  | profile  | 50  | 0.01 | 128 | 128  |
