@@ -1,6 +1,5 @@
 # GNN-based Fake News Detection
 [![Open in Code Ocean](https://codeocean.com/codeocean-assets/badge/open-in-code-ocean.svg)](https://codeocean.com/capsule/7305473/tree)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/safe-graph/GNN-FakeNews/?branch=main)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/user-preference-aware-fake-news-detection/graph-classification-on-upfd-gos)](https://paperswithcode.com/sota/graph-classification-on-upfd-gos?p=user-preference-aware-fake-news-detection)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/user-preference-aware-fake-news-detection/graph-classification-on-upfd-pol)](https://paperswithcode.com/sota/graph-classification-on-upfd-pol?p=user-preference-aware-fake-news-detection)
 
@@ -8,13 +7,13 @@
 
 
 This repo includes the Pytorch-Geometric implementation of a series of Graph Neural Network (GNN) based fake news detection models.
-All [GNN models](#leader-board) are implemented and evaluated under the User Preference-aware Fake News Detection (UPFD) framework.
+All [GNN models](#user-guide) are implemented and evaluated under the User Preference-aware Fake News Detection ([UPFD](https://arxiv.org/pdf/2104.12259.pdf)) framework.
 The fake news detection problem is instantiated as a graph classification task under the UPFD framework. 
 
 You can make reproducible run on [CodeOcean](https://codeocean.com/capsule/7305473/tree) without manual configuration.
 
 We welcome contributions of results of existing models and the SOTA results of new models based on our dataset.
-You can check the [benchmark](https://paperswithcode.com/dataset/upfd) hosted by PaperWithCode for implemented models and their performances.
+You can check the [benchmark](https://paperswithcode.com/dataset/upfd) hosted by PaperWithCode for SOTA models and their performances.
 
 If you use the code in your project, please cite the following paper:
 
@@ -94,12 +93,12 @@ All GNN-based fake news detection models are under the `\gnn_model` directory.
 You can fine-tune each model according to arguments specified in the argparser of each model.
 The implemented models are as follows:
 
-* **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)** 
-* **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)**
-* **[BiGCN](https://arxiv.org/pdf/2001.06362.pdf)**
-* **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)**
-* **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)**
-* **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)**
+* **[GNN-CL](https://arxiv.org/pdf/2007.03316.pdf)**: Han, Yi, Shanika Karunasekera, and Christopher Leckie. "Graph neural networks with continual learning for fake news detection from social media." arXiv preprint arXiv:2007.03316 (2020).
+* **[GCNFN](https://arxiv.org/pdf/1902.06673.pdf)**: Monti, Federico, Fabrizio Frasca, Davide Eynard, Damon Mannion, and Michael M. Bronstein. "Fake news detection on social media using geometric deep learning." arXiv preprint arXiv:1902.06673 (2019).
+* **[BiGCN](https://arxiv.org/pdf/2001.06362.pdf)**: Bian, Tian, Xi Xiao, Tingyang Xu, Peilin Zhao, Wenbing Huang, Yu Rong, and Junzhou Huang. "Rumor detection on social media with bi-directional graph convolutional networks." In Proceedings of the AAAI Conference on Artificial Intelligence, vol. 34, no. 01, pp. 549-556. 2020.
+* **[UPFD-GCN](https://arxiv.org/pdf/1609.02907.pdf)**: Kipf, Thomas N., and Max Welling. "Semi-supervised classification with graph convolutional networks." arXiv preprint arXiv:1609.02907 (2016).
+* **[UPFD-GAT](https://arxiv.org/pdf/1710.10903.pdf)**: Veličković, Petar, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Lio, and Yoshua Bengio. "Graph attention networks." arXiv preprint arXiv:1710.10903 (2017).
+* **[UPFD-SAGE](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf)**: Hamilton, William L., Rex Ying, and Jure Leskovec. "Inductive representation learning on large graphs." arXiv preprint arXiv:1706.02216 (2017).
 
 Since the UPFD framework is built upon the [PyG](https://github.com/rusty1s/pytorch_geometric), you can easily try other graph classification models
 like [GIN](https://github.com/rusty1s/pytorch_geometric/blob/master/examples/mutag_gin.py) and [HGP-SL](https://github.com/cszhangzhen/HGP-SL)
@@ -107,8 +106,6 @@ under our dataset.
 
 
 ## How to Contribute
-You are welcomed to submit your model, hyper-parameters, and results to this repo via create a pull request.
-After verifying the results, your model will be added to the repo and the result will be updated to the leaderboard.
-For other inquiries, please send email to [ytongdou@gmail.com](mailto:ytongdou@gmail.com).
-
-
+You are welcomed to submit your model code, hyper-parameters, and results to this repo via create a pull request.
+After verifying the results, your model will be added to the repo and the result will be updated to the [benchmark](https://paperswithcode.com/dataset/upfd).
+Please email to [ytongdou@gmail.com](mailto:ytongdou@gmail.com) for other inquiries.
