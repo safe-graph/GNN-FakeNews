@@ -55,7 +55,7 @@ pip install -r requirements.txt
 
 ## Datasets
 
-If you have install the latest version of PyG or DGL, you can use their built-in dataloaders to download and load the UPFD dataset.
+If you have installed the latest version of PyG or DGL, you can use their built-in dataloaders to download and load the UPFD dataset.
 
 If you install the project manually, you can download the dataset (1.2GB) via the link below and
 unzip the data under the `\data` directory.
