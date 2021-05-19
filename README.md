@@ -3,7 +3,7 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/user-preference-aware-fake-news-detection/graph-classification-on-upfd-gos)](https://paperswithcode.com/sota/graph-classification-on-upfd-gos?p=user-preference-aware-fake-news-detection)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/user-preference-aware-fake-news-detection/graph-classification-on-upfd-pol)](https://paperswithcode.com/sota/graph-classification-on-upfd-pol?p=user-preference-aware-fake-news-detection)
 
-[Installation](#installation) | [Datasets](#datasets) | [User Guide](#user-guide) | [Benchmark](https://paperswithcode.com/dataset/upfd) | [How to Contribute](#how-to-contribute)
+[Installation](#installation) | [Datasets](#datasets) | [Models](#models) |  [PyG Example](https://github.com/rusty1s/pytorch_geometric/blob/master/examples/upfd.py)  | [Benchmark](https://paperswithcode.com/dataset/upfd) | [How to Contribute](#how-to-contribute)
 
 
 This repo includes the Pytorch-Geometric implementation of a series of Graph Neural Network (GNN) based fake news detection models.
@@ -11,6 +11,8 @@ All [GNN models](#user-guide) are implemented and evaluated under the User Prefe
 The fake news detection problem is instantiated as a graph classification task under the UPFD framework. 
 
 You can make reproducible run on [CodeOcean](https://codeocean.com/capsule/7305473/tree) without manual configuration.
+
+The UPFD dataset and its example usage is also available at the PyTorch-Geometric official repo
 
 We welcome contributions of results of existing models and the SOTA results of new models based on our dataset.
 You can check the [benchmark](https://paperswithcode.com/dataset/upfd) hosted by PaperWithCode for SOTA models and their performances.
@@ -29,6 +31,17 @@ SIGIR'21 ([PDF](https://arxiv.org/pdf/2104.12259.pdf))
 
 ## Installation
 
+### Install via PyG
+
+Our [dataset](https://github.com/rusty1s/pytorch_geometric/blob/master/torch_geometric/datasets/upfd.py) has been integrated with the official PyTorch-Geometric library. Please follow the installation instructions of [PyTorch-Geometric](https://github.com/rusty1s/pytorch_geometric) to install the latest version of PyG and check the [code example](https://github.com/rusty1s/pytorch_geometric/blob/master/examples/upfd.py) for dataset usage.
+
+
+### Install via DGL
+
+Coming soon.
+
+### Manually Install
+
 To run the code in this repo, you need to have `Python>=3.6`, `PyTorch>=1.6`, and `PyTorch-Geometric>=1.6.1`.
 Please follow the installation instructions of [PyTorch-Geometric](https://github.com/rusty1s/pytorch_geometric) to install PyG.
 
@@ -42,10 +55,12 @@ pip install -r requirements.txt
 
 ## Datasets
 
-The dataset can be loaded using the PyG API. You can download the dataset (2.66GB) via the link below and
+If you have install the latest version of PyG or DGL, you can use their built-in dataloaders to download and load the UPFD dataset.
+
+If you install the project manually, you can download the dataset (1.2GB) via the link below and
 unzip the data under the `\data` directory.
 
-https://mega.nz/file/j5ZFEK7Z#KDnX2sjg65cqXsIRi0cVh6cvp7CDJZh1Zlm9-Xt28d4
+https://drive.google.com/drive/folders/1OslTX91kLEYIi2WBnwuFtXsVz5SS_XeR?usp=sharing
 
 The dataset includes fake&real news propagation networks on Twitter built according to fact-check information from
 [Politifact](https://www.politifact.com/) and [Gossipcop](https://www.gossipcop.com/).
@@ -87,7 +102,7 @@ You can refer to the [paper](https://arxiv.org/pdf/2005.00625.pdf) for more deta
     <br>
 <p>
 
-## User Guide
+## Models
 
 All GNN-based fake news detection models are under the `\gnn_model` directory.
 You can fine-tune each model according to arguments specified in the argparser of each model.
