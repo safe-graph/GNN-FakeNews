@@ -38,7 +38,7 @@ Our [dataset](https://github.com/rusty1s/pytorch_geometric/blob/master/torch_geo
 
 ### Install via DGL
 
-Coming soon.
+Our [dataset](https://github.com/dmlc/dgl/blob/master/python/dgl/data/fakenews.py) has been integrated with the official [Deep Graph library](https://github.com/dmlc/dgl)(DGL). Please follow the installation instructions of [DGL](https://github.com/dmlc/dgl) to install the latest version of DGL and check the [docstring](https://github.com/dmlc/dgl/blob/master/python/dgl/data/fakenews.py) of the dataset class for dataset usage.
 
 ### Manually Install
 
