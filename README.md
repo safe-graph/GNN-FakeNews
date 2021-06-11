@@ -24,7 +24,7 @@ SIGIR'21 ([PDF](https://arxiv.org/pdf/2104.12259.pdf))
 @inproceedings{dou2021user,
   title={User Preference-aware Fake News Detection},
   author={Dou, Yingtong and Shu, Kai and Xia, Congying and Yu, Philip S. and Sun, Lichao},
-  booktitle={Proceedings of the 44nd International ACM SIGIR Conference on Research and Development in Information Retrieval},
+  booktitle={Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval},
   year={2021}
 }
 ```

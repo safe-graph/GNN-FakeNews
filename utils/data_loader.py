@@ -60,6 +60,7 @@ def read_graph_data(folder, feature):
 	node_graph_id = np.load(folder + 'node_graph_id.npy')
 	graph_labels = np.load(folder + 'graph_labels.npy')
 
+
 	edge_attr = None
 	x = torch.from_numpy(node_attributes.todense()).to(torch.float)
 	node_graph_id = torch.from_numpy(node_graph_id).to(torch.long)
@@ -169,7 +170,7 @@ class FNNDataset(InMemoryDataset):
 		self.feature = feature
 		super(FNNDataset, self).__init__(root, transform, pre_transform, pre_filter)
 		if not empty:
-			self.data, self.slices = torch.load(self.processed_paths[0])
+			self.data, self.slices, self.train_idx, self.val_idx, self.test_idx = torch.load(self.processed_paths[0])
 
 	@property
 	def raw_dir(self):
@@ -216,7 +217,13 @@ class FNNDataset(InMemoryDataset):
 			data_list = [self.pre_transform(data) for data in data_list]
 			self.data, self.slices = self.collate(data_list)
 
-		torch.save((self.data, self.slices), self.processed_paths[0])
+		# The fixed data split for benchmarking evaluation
+		# train-val-test split is 20%-10%-70%
+		self.train_idx = torch.from_numpy(np.load(self.raw_dir + 'train_idx.npy')).to(torch.long)
+		self.val_idx = torch.from_numpy(np.load(self.raw_dir + 'val_idx.npy')).to(torch.long)
+		self.test_idx = torch.from_numpy(np.load(self.raw_dir + 'test_idx.npy')).to(torch.long)
+
+		torch.save((self.data, self.slices, self.train_idx, self.val_idx, self.test_idx), self.processed_paths[0])
 
 	def __repr__(self):
 		return '{}({})'.format(self.name, len(self))
