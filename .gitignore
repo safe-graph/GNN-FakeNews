@@ -8,3 +8,6 @@ data/gossipcop/raw/A.txt
 *.pt
 data/politifact/raw/A.txt
 *.zip
+data/data/gossipcop/raw/A.txt
+data/data/politifact/raw/A.txt
+data/data/README.md
