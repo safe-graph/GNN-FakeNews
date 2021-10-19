@@ -77,9 +77,8 @@ The statistics of the dataset is shown below:
 
 
 Due to the Twitter policy, we could not release the crawled user historical tweets publicly.
-To get the corresponding Twitter user information, you can refer to news lists under `\data`
-and map the news id to [FakeNewsNet](https://github.com/KaiDMML/FakeNewsNet).
-Then, you can crawl the user information by following the instruction on FakeNewsNet.
+To get the corresponding Twitter user information, you can refer to news lists and the node_id-twitter_id mappings under `\data`.
+Two `.pkl` files include the dictionaries with the keys as the node_ids in the datasets and the values represent corresponding Twitter user_ids.
 In the UPFD project, we use [Tweepy](https://www.tweepy.org/) and [Twitter Developer API](https://developer.twitter.com/en) to get the user information.
 
 We incorporate four node feature types in the dataset, the 768-dimensional `bert` and 300-dimensional `spacy` features 
