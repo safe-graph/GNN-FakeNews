@@ -57,10 +57,12 @@ pip install -r requirements.txt
 
 If you have installed the latest version of PyG or DGL, you can use their built-in dataloaders to download and load the UPFD dataset.
 
-If you install the project manually, you can download the dataset (1.2GB) via the link below and
+If you install the project manually, you can download the dataset (1.2GB) via the links below and
 unzip the data under the `\data` directory.
 
-https://drive.google.com/drive/folders/1OslTX91kLEYIi2WBnwuFtXsVz5SS_XeR?usp=sharing
+Google Drive: https://drive.google.com/drive/folders/1OslTX91kLEYIi2WBnwuFtXsVz5SS_XeR?usp=sharing
+
+Baidu Disk: https://pan.baidu.com/s/1NFtuwzmpAezNcJzlSlduSw Password: fj43
 
 The dataset includes fake&real news propagation networks on Twitter built according to fact-check information from
 [Politifact](https://www.politifact.com/) and [Gossipcop](https://www.gossipcop.com/).
