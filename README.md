@@ -80,7 +80,10 @@ The statistics of the dataset is shown below:
 
 Due to the Twitter policy, we could not release the crawled user historical tweets publicly.
 To get the corresponding Twitter user information, you can refer to news lists and the node_id-twitter_id mappings under `\data`.
-Two `.pkl` files include the dictionaries with the keys as the node_ids in the datasets and the values represent corresponding Twitter user_ids.
+Two `xxx_id_twitter_mapping.pkl` files include the dictionaries with the keys as the node_ids in the datasets and the values represent corresponding Twitter user_ids.
+For the news node, its value represents news id in the [FakeNewsNet](https://github.com/KaiDMML/FakeNewsNet) datasets.
+Similarly, two `xxx_id_time_mapping.pkl` files include the node_id to its corresponding Tweet timestamp mappings.
+Note that the timestamp is in UNIX timestamp format. The news node doesn’t contain timestamp even in the original FakeNewsNet dataset, you can either retrieve it on Twitter or use its most recent retweet time as an approximation.
 In the UPFD project, we use [Tweepy](https://www.tweepy.org/) and [Twitter Developer API](https://developer.twitter.com/en) to get the user information.
 
 We incorporate four node feature types in the dataset, the 768-dimensional `bert` and 300-dimensional `spacy` features 
