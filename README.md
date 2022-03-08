@@ -84,7 +84,7 @@ Two `xxx_id_twitter_mapping.pkl` files include the dictionaries with the keys as
 For the news node, its value represents news id in the [FakeNewsNet](https://github.com/KaiDMML/FakeNewsNet) datasets.
 Similarly, two `xxx_id_time_mapping.pkl` files include the node_id to its corresponding Tweet timestamp mappings.
 Note that the timestamp is in UNIX timestamp format. The news node doesn’t contain timestamp even in the original FakeNewsNet dataset, you can either retrieve it on Twitter or use its most recent retweet time as an approximation.
-In the UPFD project, we use [Tweepy](https://www.tweepy.org/) and [Twitter Developer API](https://developer.twitter.com/en) to get the user information.
+In the UPFD project, we use [Tweepy](https://www.tweepy.org/) and [Twitter Developer API](https://developer.twitter.com/en) to get the user information, the crawler code can be found at [\utils\twitter_crawler.py](https://github.com/safe-graph/GNN-FakeNews/blob/main/utils/twitter_crawler.py).
 
 We incorporate four node feature types in the dataset, the 768-dimensional `bert` and 300-dimensional `spacy` features 
 are encoded using pretrained [BERT](https://github.com/hanxiao/bert-as-service) and [spaCy](https://spacy.io/models/en#en_core_web_lg) word2vec, respectively.
