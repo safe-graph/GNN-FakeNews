@@ -57,8 +57,10 @@ pip install -r requirements.txt
 
 If you have installed the latest version of PyG or DGL, you can use their built-in dataloaders to download and load the UPFD dataset.
 
-If you install the project manually, you can download the dataset (1.2GB) via the links below and
-unzip the data under the `\data` directory.
+If you install the project manually, you need to download the dataset (1.2GB) 
+via the links below and
+unzip the corresponding data under the `\data\{dataset_name}\raw\` directory, 
+the `dataset_name` is `politifact` or `gossipcop`.
 
 Google Drive: https://drive.google.com/drive/folders/1OslTX91kLEYIi2WBnwuFtXsVz5SS_XeR?usp=sharing
 
