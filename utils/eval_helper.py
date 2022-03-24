@@ -12,7 +12,7 @@ def eval_deep(log, loader):
 	"""
 
 	# get the empirical batch_size for each mini-batch
-	data_size = len(loader.dataset.indices())
+	data_size = len(loader.dataset.indices)
 	batch_size = loader.batch_size
 	if data_size % batch_size == 0:
 		size_list = [batch_size] * (data_size//batch_size)
